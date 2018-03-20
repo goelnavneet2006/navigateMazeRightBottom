@@ -1,0 +1,53 @@
+<script>
+  //https://www.careercup.com/question?id=15464714 (non-recursive)
+
+  var inputMatrix =
+  [
+    [1,1,0,0],
+    [0,1,0,1],
+    [0,1,1,1],
+    [0,1,1,1]
+  ];
+
+  function parseMatrix(inputMatrix, x, y, solutionMatrix) {
+    solutionMatrix = [
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0]
+    ];
+    
+    var i = 0, j = 0;
+    while (i < inputMatrix.length) {
+      while (j < inputMatrix[i].length) {
+        if (inputMatrix[i][j] === 1) {
+          solutionMatrix[i][j] = 1;
+          j++;
+        } else if (inputMatrix[i][j] === 0) {
+          j--;
+          i++;
+        }
+      }
+
+      if (j === inputMatrix[i].length && i < inputMatrix.length - 1) {
+        var k = j - 1;
+        while (inputMatrix[i][k] === 1 && inputMatrix[i+1][k] !== 1) {
+          solutionMatrix[i][k] = 0;
+          k--;
+        }
+        j = k;
+        i++;
+      } else if (i === inputMatrix.length - 1) {
+        i++;
+      }
+    }
+
+    return solutionMatrix;
+
+  };
+
+  var solutionMatrix = [];
+  solutionMatrix = parseMatrix(inputMatrix, 0, 0, solutionMatrix);
+
+  console.log(solutionMatrix);
+</script>
